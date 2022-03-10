@@ -9,11 +9,21 @@ function App() {
     { id: 4, text: "This is fourth todo!", done: false },
   ]);
 
+  const [isNewTodo, setIsNewTodo] = useState(false);
+  const [newTodoValue, setNewTodoValue] = useState("");
+
   const handleChange = (id) => {
     let newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
     todo.done = !todo.done;
     setTodos(newTodos);
+  };
+
+  const AddTodo = (e) => {
+    e.preventDefault();
+    let newId = todos[todos.length - 1].id + 1;
+    setTodos([...todos, { id: newId, text: newTodoValue, done: false }]);
+    setIsNewTodo(false);
   };
 
   return (
@@ -30,6 +40,19 @@ function App() {
           </li>
         ))}
       </ul>
+
+      {isNewTodo ? (
+        <form onSubmit={AddTodo}>
+          <input
+            type="text"
+            value={newTodoValue}
+            onChange={(e) => setNewTodoValue(e.target.value)}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      ) : (
+        <button onClick={() => setIsNewTodo(true)}>Add todo</button>
+      )}
     </div>
   );
 }
