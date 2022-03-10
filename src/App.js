@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ul>
+        <li>
+          <input type="checkbox" />
+          <p style={{display: "inline"}}>This is first todo!</p>
+        </li>
+        <li>
+          <input type="checkbox" />
+          <p style={{display: "inline"}}>This is Second todo!</p>
+        </li>
+        <li>
+          <input type="checkbox" />
+          <p style={{display: "inline"}}>This is Third todo!</p>
+        </li>
+        <li>
+          <input type="checkbox" />
+          <p style={{display: "inline"}}>This is Fourth todo!</p>
+        </li>
+      </ul>
     </div>
   );
 }
