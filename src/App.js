@@ -1,29 +1,38 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: "This is first todo!", done: false },
-    { id: 2, text: "This is second todo!", done: false },
-    { id: 3, text: "This is third todo!", done: false },
-    { id: 4, text: "This is fourth todo!", done: false },
-  ]);
+  const [todos, setTodos] = useState([]);
 
   const [isNewTodo, setIsNewTodo] = useState(false);
   const [newTodoValue, setNewTodoValue] = useState("");
 
-  const handleChange = (id) => {
+  useEffect(() => {
+    let data = localStorage.getItem("todos");
+    if (data) {
+      setTodos(JSON.parse(data));
+    }
+  }, []);
+
+  const handleTodoDone = (id) => {
     let newTodos = [...todos];
     const todo = newTodos.find((todo) => todo.id === id);
     todo.done = !todo.done;
     setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   const AddTodo = (e) => {
     e.preventDefault();
-    let newId = todos[todos.length - 1].id + 1;
-    setTodos([...todos, { id: newId, text: newTodoValue, done: false }]);
+    let newId = 1;
+    if (todos[todos.length - 1]) {
+      newId = todos[todos.length - 1].id + 1;
+    }
+    let newTodos = [...todos, { id: newId, text: newTodoValue, done: false }];
+    setTodos(newTodos);
     setIsNewTodo(false);
+    setNewTodoValue("");
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   return (
@@ -34,7 +43,7 @@ function App() {
             <input
               type="checkbox"
               checked={todo.done}
-              onChange={() => handleChange(todo.id)}
+              onChange={() => handleTodoDone(todo.id)}
             />
             <p style={{ display: "inline" }}>{todo.text}</p>
           </li>
